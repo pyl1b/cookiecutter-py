@@ -19,22 +19,24 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "black",
+    "build",
     "flake8",
     "isort",
     "mypy",
+    "pre-commit",
+    "pyproject-flake8",
     "pytest-cov",
     "pytest-mock",
     "pytest",
     "twine",
     "wheel",
-    "pre-commit",
-    "build",
 ]
 tests = [
     "black",
     "flake8",
     "isort",
     "mypy",
+    "pyproject-flake8",
     "pytest-cov",
     "pytest-mock",
     "pytest",
@@ -42,15 +44,15 @@ tests = [
     "wheel",
 ]
 docs = [
-    "mkdocs",
+    "cairosvg",
     "markdown-include",
     "mkdocs-material",
     "mkdocs-material[imaging]",
+    "mkdocs",
     "mkdocstrings",
     "mkdocstrings[python]",
-    "pymdown-extensions",
     "pillow",
-    "cairosvg",
+    "pymdown-extensions",
 ]
 
 
@@ -64,7 +66,7 @@ include-package-data = true
 
 
 [tool.setuptools.packages.find]
-exclude = ["venv*", "scripts", "playground", "tests", "docs", "build", "dist"]
+exclude = ["venv*", "playground*"]
 
 
 [tool.setuptools_scm]
@@ -77,7 +79,12 @@ write_to = "{{ cookiecutter.project_slug }}/__version__.py"
 # Make isort compatible with black
 profile = "black"
 
-skip = ["*_test.py", "test_*", "*_tests.py", "tests_*"]
+skip = [
+    "test_*.py", "*_test.py",
+    "tests_*.py", "*_tests.py",
+    "spec_*.py", "*_spec.py",
+    "specs_*.py", "*_specs.py",
+]
 src_paths = "{{ cookiecutter.project_slug }}"
 known_first_party = "{{ cookiecutter.project_slug }}"
 
