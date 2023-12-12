@@ -28,6 +28,7 @@ dev = [
     "twine",
     "wheel",
     "pre-commit",
+    "build",
 ]
 tests = [
     "black",
@@ -39,6 +40,17 @@ tests = [
     "pytest",
     "twine",
     "wheel",
+]
+docs = [
+    "mkdocs",
+    "markdown-include",
+    "mkdocs-material",
+    "mkdocs-material[imaging]",
+    "mkdocstrings",
+    "mkdocstrings[python]",
+    "pymdown-extensions",
+    "pillow",
+    "cairosvg",
 ]
 
 
@@ -52,7 +64,7 @@ include-package-data = true
 
 
 [tool.setuptools.packages.find]
-exclude = ["venv*", "scripts", "playground", "tests"]
+exclude = ["venv*", "scripts", "playground", "tests", "docs", "build", "dist"]
 
 
 [tool.setuptools_scm]
@@ -83,15 +95,31 @@ target-version = ['py39', 'py310', 'py311']
 testpaths = [
     "{{ cookiecutter.project_slug }}",
 ]
+python_files = [
+    "test_*.py", "*_test.py",
+    "tests_*.py", "*_tests.py",
+    "spec_*.py", "*_spec.py",
+    "specs_*.py", "*_specs.py",
+]
+python_classes = ["Test", "Acceptance"]
+python_functions = ["test"]
 
 
 [tool.mypy]
 ignore_missing_imports = true
-exclude = [".+_test.py", "test_.+", ".+_tests.py", "tests_.+"]
+exclude = [
+    ".+_tests?.py", "tests?_.+",
+    ".+_specs?.py", "specs?_.+"
+]
 
 
 [tool.flake8]
 max-line-length = 80
 docstring-convention = "google"
-exclude = ["*_test.py", "test_*", "*_tests.py", "tests_*"]
+exclude = [
+    "test_*.py", "*_test.py",
+    "tests_*.py", "*_tests.py",
+    "spec_*.py", "*_spec.py",
+    "specs_*.py", "*_specs.py",
+]
 extend-ignore = "E203, E501, E704"
